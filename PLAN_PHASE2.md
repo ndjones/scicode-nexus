@@ -21,10 +21,19 @@ This document outlines the design for Phase 2 of the SciCode-Nexus project, focu
 1. Create feature branch from `develop`
 2. Implement changes with tests
 3. Run test suite locally
-4. Push branch and open PR against `develop`
-5. Require at least one approval
-6. Squash and merge into `develop`
-7. Regularly merge `develop` into `main` for releases
+4. **Validate git status**: Ensure all changes are accounted for, no unintended modifications
+5. Commit changes with descriptive message
+6. Push branch and open PR against `develop`
+7. Require at least one approval
+8. Squash and merge into `develop`
+9. Regularly merge `develop` into `main` for releases
+
+### Git Validation Practices
+- Before committing: Run `git status` to review changes
+- Use `git diff` to review modifications before staging
+- Ensure `.gitignore` is properly configured to exclude unnecessary files
+- Validate that only intended files are staged for commit
+- After pushing: Verify that the remote repository reflects the latest changes
 
 ### GitHub Actions (Future)
 - CI pipeline on PRs to `develop` and `main`
@@ -257,6 +266,7 @@ Create `trigger_openhands_task.py` that:
 - [ ] GitHub repository created and connected
 - [ ] Branching strategy documented and followed
 - [ ] PR workflow established with required approvals
+- [ ] Git validation practices implemented (status checks, commit verification)
 
 ### Test-Driven Development
 - [ ] Test suites written for bootstrap scripts
@@ -266,7 +276,7 @@ Create `trigger_openhands_task.py` that:
 ### OpenHands-Cognee-MCP Integration
 - [ ] OpenHands can successfully query Cognee-MCP
 - [ ] Context retrieval returns relevant project information
-- [ *] Learned patterns stored in Cognee
+- [ ] Learned patterns stored in Cognee
 
 ### Self-Building Tasks
 - [ ] At least 3 of the 5 initial self-building tasks completed

@@ -33,7 +33,7 @@ def main():
 
     try:
         import cognee
-        from cognee.api import add, cognify
+        from cognee.api.v1 import add, cognify
     except ImportError as e:
         print(f"Error importing cognee: {e}")
         print("Please install dependencies with: pip install -r requirements.txt")
