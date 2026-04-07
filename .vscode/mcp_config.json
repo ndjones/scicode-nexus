@@ -1,0 +1,9 @@
+{
+  "servers": [
+    {
+      "name": "cognee-mcp",
+      "url": "http://localhost:8001/mcp",
+      "type": "http"
+    }
+  ]
+}

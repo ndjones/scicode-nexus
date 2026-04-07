@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  onyx:
+    image: onyxoss/onyx:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/onyx
+    depends_on:
+      - db
+
+  cognee:
+    image: cognitedata/cognee:latest
+    ports:
+      - "8001:8000"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cognee
+    depends_on:
+      - db
+
+  openhands:
+    image: docker.io/openhands/openhands:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - LOG_LEVEL=INFO
+    depends_on:
+      - db
+
+  db:
+    image: ankane/pgvector:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=onyx
+      - POSTGRES_DB=cognee
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
