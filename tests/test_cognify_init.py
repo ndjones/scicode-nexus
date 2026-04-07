@@ -7,7 +7,7 @@ import os
 import sys
 import tempfile
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, AsyncMock
 
 def test_imports():
     """Test that we can import the module"""
@@ -149,22 +149,28 @@ def test_successful_run_calls_expected_functions():
             src_dir.mkdir()
             papers_dir.mkdir()
             
+            # Create some dummy files
+            (src_dir / "dummy1.txt").touch()
+            (src_dir / "dummy2.txt").touch()
+            (papers_dir / "dummy3.txt").touch()
+            (papers_dir / "dummy4.txt").touch()
+            
             mock_path.return_value.parent = temp_path
             mock_path.return_value.__truediv__.side_effect = lambda x: temp_path / x
             mock_path.return_value.exists.return_value = True
             
-            # Mock the cognee imports and functions - they're in cognee.api.v1
-            mock_add = MagicMock()
-            mock_cognify = MagicMock()
+            # Mock the cognee imports and functions at the source
+            mock_add = AsyncMock()
+            mock_cognify = AsyncMock()
             
-            with patch('cognee.api.v1.add', mock_add):
-                with patch('cognee.api.v1.cognify', mock_cognify):
+            with patch('cognee.api.v1.add.add', mock_add):
+                with patch('cognee.api.v1.cognify.cognify', mock_cognify):
                     import cognify_init
                     with patch('builtins.print'):
                         cognify_init.main()
                         
-                        # Check that add was called twice (for src and papers)
-                        assert mock_add.call_count == 2
+                        # Check that add was called for each file (4 files total)
+                        assert mock_add.call_count == 4
                         
                         # Check that cognify was called once
                         mock_cognify.assert_called_once()

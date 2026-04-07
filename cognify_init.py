@@ -33,7 +33,8 @@ def main():
 
     try:
         import cognee
-        from cognee.api.v1 import add, cognify
+        from cognee.api.v1.add import add
+        from cognee.api.v1.cognify import cognify
     except ImportError as e:
         print(f"Error importing cognee: {e}")
         print("Please install dependencies with: pip install -r requirements.txt")
@@ -43,16 +44,24 @@ def main():
     print(f"Source directory: {src_dir}")
     print(f"Papers directory: {papers_dir}")
 
-    # Add the directories to cognee
+    import asyncio
+
+    # Add the files in the directories to cognee
     print("\nAdding source directory...")
-    add(str(src_dir))
+    for file_path in src_dir.rglob("*"):
+        if file_path.is_file():
+            print(f"Adding {file_path}...")
+            asyncio.run(add(str(file_path)))
 
     print("\nAdding papers directory...")
-    add(str(papers_dir))
+    for file_path in papers_dir.rglob("*"):
+        if file_path.is_file():
+            print(f"Adding {file_path}...")
+            asyncio.run(add(str(file_path)))
 
     # Run the ECL pipeline (cognify)
     print("\nRunning ECL pipeline (cognify)...")
-    cognify()
+    asyncio.run(cognify())
 
     print("\nECL pipeline completed successfully!")
 

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   onyx:
-    image: onyxoss/onyx:latest
+    image: onyxdotapp/onyx-backend:latest
     ports:
       - "8000:8000"
     environment:
@@ -11,7 +11,7 @@ services:
       - db
 
   cognee:
-    image: cognitedata/cognee:latest
+    image: cognee/cognee:latest
     ports:
       - "8001:8000"
     environment:
@@ -24,11 +24,18 @@ services:
       - db
 
   openhands:
-    image: docker.io/openhands/openhands:latest
+    image: docker.openhands.dev/openhands/openhands:1.6
     ports:
-      - "8080:8080"
+      - "3000:3000"
     environment:
-      - LOG_LEVEL=INFO
+      - AGENT_SERVER_IMAGE_REPOSITORY=ghcr.io/openhands/agent-server
+      - AGENT_SERVER_IMAGE_TAG=1.15.0-python
+      - LOG_ALL_EVENTS=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.openhands:/.openhands
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - db
 
@@ -39,7 +46,6 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=onyx
       - POSTGRES_DB=cognee
     volumes:
       - pgdata:/var/lib/postgresql/data

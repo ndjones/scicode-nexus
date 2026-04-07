@@ -9,7 +9,7 @@ import sys
 import requests
 
 def main():
-    url = "http://localhost:8080"
+    url = "http://localhost:3000"
     try:
         # Try to get a response from the OpenHands service
         # We'll try the root endpoint; adjust if there's a specific health check endpoint

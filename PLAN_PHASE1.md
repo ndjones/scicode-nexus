@@ -68,6 +68,7 @@ Based on the initial task description, Phase 1 bootstrap steps were to include:
   - Includes proper error handling for missing directories and import failures
   - Provides clear usage instructions and prerequisites
   - Well-documented with docstring and comments
+  - **Note**: Requires LLM API key to be set in .env file for full functionality (we have set up a .env file with the necessary key)
 
 #### verify_openhands.py
 - **Status**: ✅ Completed
