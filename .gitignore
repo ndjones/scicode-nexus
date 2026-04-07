@@ -129,4 +129,7 @@ docker-compose.*.yml
 # Ignore virtual environment
 venv/
 ENV/
-env/
+
+# Ignore source and papers directories as they are meant to be user-populated
+src/
+papers/
