@@ -73,7 +73,7 @@ To set up a development environment for SciCode-Nexus, follow the instructions i
 
 ## Git Workflow
 
-We follow a Git workflow similar to what's described in our [Phase 2 design document](https://github.com/ndjones/scicode-nexus/blob/main/PLAN_PHASE2.md):
+We follow a Git workflow similar to what's described in our [Phase 2 design document](https://github.com/ndjones/scicode-nexus/blob/main/plans/PLAN_PHASE2.md):
 
 - **Main Branch**: Production-ready code only
 - **Develop Branch**: Integration branch for features

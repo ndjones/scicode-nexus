@@ -141,7 +141,7 @@ If you encounter issues not covered in this guide, please:
 ## Next Steps
 
 After setting up, you can:
-- Explore the Phase 2 design document ([PLAN_PHASE2.md](./PLAN_PHASE2.md)) for planned features.
+- Explore the Phase 2 design document ([PLAN_PHASE2.md](../plans/PLAN_PHASE2.md)) for planned features.
 - Look at the test files in the `tests/` directory to understand how the system is validated.
 - Begin contributing by following the [Contributing Guidelines](contributing.md).
 
