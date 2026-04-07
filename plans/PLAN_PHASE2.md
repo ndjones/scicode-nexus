@@ -313,7 +313,7 @@ Create `trigger_openhands_task.py` that:
 - **Mitigation**: Implement graceful degradation
 
 ## 8. Next Steps
-
+ 
 1. User creates GitHub repository and provides URL
 2. Implement test-driven approach for bootstrap validation
 3. Develop OpenHands-Cognee-MCP integration mechanism
@@ -321,6 +321,10 @@ Create `trigger_openhands_task.py` that:
 5. Build task trigger mechanism
 6. Write PLAN_PHASE2.md (this document)
 7. Switch to code mode to implement the plan
-
+ 
+## Task Tracking
+Detailed task breakdown and GitHub issue mapping maintained in:
+[plans/GITHUB_ISSUE_MAP.md](./GITHUB_ISSUE_MAP.md)
+ 
 ---
 *Document created as part of SciCode-Nexus Phase 2 planning*
