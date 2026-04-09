@@ -10,32 +10,55 @@ services:
     depends_on:
       - db
 
+  db:
+    image: ankane/pgvector:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cognee
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cognee"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   cognee:
-    image: cognee/cognee:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.api # <-- Point to the API Dockerfile
     ports:
       - "8001:8000"
-    environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=cognee
+    env_file:
+      - .env
+    volumes:
+      - ./.env:/app/.env
+      - ./local_tokenizer:/app/local_tokenizer
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   cognee-mcp:
-    image: cognee/cognee:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp # <-- Point to the MCP Dockerfile
     ports:
       - "8002:8000"
+    env_file:
+      - .env
     environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=cognee
+      - TRANSPORT_MODE=sse
+    volumes:
+      - ./.env:/app/.env
+      - ./local_tokenizer:/app/local_tokenizer
     depends_on:
-      - db
-      - cognee
+      db:
+        condition: service_healthy
+      cognee:
+        condition: service_started
 
   openhands:
     image: docker.openhands.dev/openhands/openhands:1.6
@@ -52,17 +75,6 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on:
       - db
-
-  db:
-    image: ankane/pgvector:latest
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=cognee
-    volumes:
-      - pgdata:/var/lib/postgresql/data
 
 volumes:
   pgdata:

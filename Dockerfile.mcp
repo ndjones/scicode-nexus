@@ -1,0 +1,4 @@
+# Use the MCP image
+FROM cognee/cognee-mcp:latest
+RUN pip install "cognee[postgres-binary]" protego>=0.1 playwright>=1.9.0 sentry-sdk
+RUN playwright install chromium

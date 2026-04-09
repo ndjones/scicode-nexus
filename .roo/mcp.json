@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "cognee": {
+      "type": "sse",
+      "url": "http://localhost:8002/sse",
+      "disabled": false
+    }
+  }
+}
